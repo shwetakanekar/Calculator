@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import { evaluate } from 'mathjs';
+import { evaluate, round, string } from 'mathjs';
 import './App.css';
 
 function App() {
@@ -8,7 +8,51 @@ function App() {
   const [result, updateResult] = useState(0);
 
   const handleKeyClick = (key) => {
-    updateFormula(previousFormula => previousFormula + key);
+    if (formula.length > 0) {
+      if (['+', '-', '*', '/'].includes(formula.slice(-1))) { // ends with operator
+        if (['+', '-', '*', '/'].includes(key)) {
+          updateFormula(previousFormula => previousFormula.slice(0, -1) + key);
+        }
+        else if (key === '.') {
+          updateFormula(previousFormula => previousFormula + '0' + key);
+        }
+        else {
+          updateFormula(previousFormula => previousFormula + key);
+        }
+      }
+      else if (formula.slice(-1) === '.') { //ends with decimal
+        if (key === '.') {
+          return;
+        }
+        else {
+          updateFormula(previousFormula => previousFormula + key);
+        }
+      }
+      else if (formula === 'Infinity' || formula === 'NaN') {
+        if (['+', '-', '*', '/'].includes(key)) {
+          updateFormula(previousFormula => previousFormula + key);
+        }
+      }
+      else { //ends with number
+        if (formula.split(/\+|-|\*|\//).pop().includes('.') && key === '.') { // number already has decimal
+          return;
+        }
+        else {
+          updateFormula(previousFormula => previousFormula + key);
+        }
+      }
+    }
+    else {
+      if (key === '.') {
+        updateFormula(previousFormula => previousFormula + '0' + key);
+      }
+      else if (['+', '-', '*', '/', '='].includes(key)) {
+        return;
+      }
+      else {
+        updateFormula(previousFormula => previousFormula + key);
+      }
+    }
   };
 
   const handleClear = () => {
@@ -17,8 +61,10 @@ function App() {
   };
 
   const calculateResult = () => {
-    let result = evaluate(formula);
-    console.log('---', result);
+    if (formula === '') {
+      return;
+    }
+    let result = string(round(evaluate(formula), 6));
     updateResult(result);
     updateFormula(result);
   };
