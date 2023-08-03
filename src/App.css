@@ -1,9 +1,9 @@
 #calculator {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  border: 1px solid #000000;
   max-width: 350px;
   padding: 10px;
+  background-color: #000000;
 }
 
 #calculator > div {
@@ -14,6 +14,8 @@
   grid-column-start: 1;
   grid-column-end: 5;
   height: 2rem;
+  background-color: #000000;
+  text-align: end;
 }
 
 .key {
@@ -24,6 +26,8 @@
 #clear {
   grid-column-start: 1;
   grid-column-end: 3;
+  background-color: #de0000;
+  color: #ffffff;
 }
 
 #zero {
@@ -37,4 +41,24 @@
   grid-column-start: 4;
   grid-column-end: 5;
   padding-top: 100% !important;
+  background-color: #126984;
+  color: #ffffff;
+}
+
+.numeric-key {
+  background-color: #727272;
+  color: #ffffff;
+}
+
+.operator-key {
+  background-color: #929292;
+  color: #ffffff;
+}
+
+#formula {
+  color: yellow;
+}
+
+#display {
+  color: #ffffff;
 }
