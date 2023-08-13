@@ -10,8 +10,16 @@ function App() {
   const handleKeyClick = (key) => {
     if (formula.length > 0) {
       if (['+', '-', '*', '/'].includes(formula.slice(-1))) { // ends with operator
-        if (['+', '-', '*', '/'].includes(key)) {
-          updateFormula(previousFormula => previousFormula.slice(0, -1) + key);
+        if (['+', '*', '/'].includes(key)) {
+          if (formula.slice(-1) == '-' && ['+', '-', '*', '/'].includes(formula.slice(-2, -1))) {
+            updateFormula(previousFormula => previousFormula.slice(0, -2) + key);
+          }
+          else {
+            updateFormula(previousFormula => previousFormula.slice(0, -1) + key);
+          }
+        }
+        else if (key == '-' && ['+', '-', '*', '/'].includes(formula.slice(-2, -1))) {
+          return;
         }
         else if (key === '.') {
           updateFormula(previousFormula => previousFormula + '0' + key);
