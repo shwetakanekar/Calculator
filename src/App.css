@@ -1,7 +1,7 @@
 #calculator {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  max-width: 350px;
+  width: 350px;
   padding: 10px;
   background-color: #000000;
 }
@@ -13,9 +13,10 @@
 .screen {
   grid-column-start: 1;
   grid-column-end: 5;
-  height: 2rem;
-  background-color: #000000;
   text-align: end;
+  font-family: 'digital';
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 .key {
@@ -40,7 +41,7 @@
   grid-row-end: 8;
   grid-column-start: 4;
   grid-column-end: 5;
-  padding-top: 100% !important;
+  padding-top: 70%;
   background-color: #126984;
   color: #ffffff;
 }
@@ -56,9 +57,23 @@
 }
 
 #formula {
-  color: yellow;
+  color: #ffc300;
+  font-size: 0.7rem;
+  height: 1rem;
 }
 
 #display {
   color: #ffffff;
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+@media screen and (max-width: 380px) {
+  #calculator {
+    width: 260px;
+  }
+
+  .key {
+    padding: 1rem;
+  }
 }

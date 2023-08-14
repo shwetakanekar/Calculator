@@ -5,9 +5,11 @@ import './App.css';
 
 function App() {
   const [formula, updateFormula] = useState('');
-  const [result, updateResult] = useState(0);
+  // const [result, updateResult] = useState(0);
+  const [displayValue, updateDisplayValue] = useState('0');
 
   const handleKeyClick = (key) => {
+    // update the formula
     if (formula.length > 0) {
       if (['+', '-', '*', '/'].includes(formula.slice(-1))) { // ends with operator
         if (['+', '*', '/'].includes(key)) {
@@ -61,11 +63,42 @@ function App() {
         updateFormula(previousFormula => previousFormula + key);
       }
     }
+
+    // update the display value
+    if (displayValue === '0') {
+      if (['0','1','2','3','4','5','6','7','8','9'].includes(key)) {
+        updateDisplayValue(key);
+      }
+      else if (key === '.') {
+        updateDisplayValue('0.');
+      }
+    }
+    else if (['0','1','2','3','4','5','6','7','8','9'].includes(displayValue.slice(-1))) {
+      if (['0','1','2','3','4','5','6','7','8','9', '.'].includes(key)) {
+        updateDisplayValue(previousValue => previousValue + key);
+      }
+      else if (['+', '-', '*', '/'].includes(key)) {
+        updateDisplayValue(key);
+      }
+    }
+    else if (['+', '-', '*', '/'].includes(displayValue)) {
+      if (['+', '-', '*', '/', '0','1','2','3','4','5','6','7','8','9'].includes(key)) {
+        updateDisplayValue(key);
+      }
+      else if (key === '.') {
+        updateDisplayValue('0.');
+      }
+    }
+    else if (displayValue.slice(-1) === '.') {
+      if (['0','1','2','3','4','5','6','7','8','9'].includes(key)) {
+        updateDisplayValue(previousValue => previousValue + key);
+      }
+    }
   };
 
   const handleClear = () => {
     updateFormula('');
-    updateResult(0);
+    updateDisplayValue('0');
   };
 
   const calculateResult = () => {
@@ -73,15 +106,15 @@ function App() {
       return;
     }
     let result = string(round(evaluate(formula), 6));
-    updateResult(result);
     updateFormula(result);
+    updateDisplayValue(result);
   };
 
   return (
     <>
       <div id='calculator'>
         <div className='screen' id='formula'>{formula}</div>
-        <div className='screen' id='display'>{result}</div>
+        <div className='screen' id='display'>{displayValue}</div>
         <div className='key' id="clear" onClick={handleClear}>AC</div>
         <div className='operator-key key' id="divide" onClick={() => handleKeyClick('/')}>/</div>
         <div className='operator-key key' id="multiply" onClick={() => handleKeyClick('*')}>*</div>
