@@ -16,5 +16,5 @@ body {
   font-family: 'digital';
   font-style: normal;
   font-weight: normal;
-  src: local('Digital Numbers Regular'), url('DigitalNumbers-Regular.woff') format('woff');
+  src: local('Digital Numbers Regular'), url('./assets/DigitalNumbers-Regular.woff') format('woff');
 }
