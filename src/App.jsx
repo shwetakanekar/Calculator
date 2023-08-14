@@ -5,7 +5,6 @@ import './App.css';
 
 function App() {
   const [formula, updateFormula] = useState('');
-  // const [result, updateResult] = useState(0);
   const [displayValue, updateDisplayValue] = useState('0');
 
   const handleKeyClick = (key) => {
